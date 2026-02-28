@@ -30,17 +30,17 @@ export function FuelEfficiencyTab({ fuelData, emissionsData }: FuelEfficiencyTab
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card className="p-4 bg-accent border-slate-600">
+        <Card className="p-4 bg-accent border-border">
           <div className="text-sm text-muted-foreground mb-1">Fleet Avg MPG</div>
           <div className="text-3xl font-bold text-blue-400">22.2</div>
           <div className="text-xs text-green-400 mt-1">↑ 5.2% from last week</div>
         </Card>
-        <Card className="p-4 bg-accent border-slate-600">
+        <Card className="p-4 bg-accent border-border">
           <div className="text-sm text-muted-foreground mb-1">Avg Liters/100km</div>
           <div className="text-3xl font-bold text-orange-400">10.6</div>
           <div className="text-xs text-red-400 mt-1">↑ 2.1% from last week</div>
         </Card>
-        <Card className="p-4 bg-accent border-slate-600">
+        <Card className="p-4 bg-accent border-border">
           <div className="text-sm text-muted-foreground mb-1">Weekly CO₂ Emissions</div>
           <div className="text-3xl font-bold text-green-400">11.2T</div>
           <div className="text-xs text-red-400 mt-1">↑ 8.3% from last week</div>
@@ -48,7 +48,7 @@ export function FuelEfficiencyTab({ fuelData, emissionsData }: FuelEfficiencyTab
       </div>
 
       <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-slate-100 mb-4">Fuel Efficiency by Vehicle</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4">Fuel Efficiency by Vehicle</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={defaultFuelData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
@@ -66,7 +66,7 @@ export function FuelEfficiencyTab({ fuelData, emissionsData }: FuelEfficiencyTab
       </Card>
 
       <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-slate-100 mb-4">Weekly CO₂ Emissions Trend</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4">Weekly CO₂ Emissions Trend</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={defaultEmissionsData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#475569" />

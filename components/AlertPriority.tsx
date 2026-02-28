@@ -30,9 +30,9 @@ export function AlertPriority({ alerts }: AlertPriorityProps) {
       case 'warning':
         return 'bg-amber-500/10 border-amber-500/20 text-amber-500'
       case 'info':
-        return 'bg-blue-500/10 border-blue-500/20 text-blue-500'
+        return 'bg-primary/10 border-primary/20 text-primary'
       default:
-        return 'bg-slate-500/10 border-slate-500/20 text-muted-foreground'
+        return 'bg-muted border-border text-muted-foreground'
     }
   }
 
@@ -49,51 +49,51 @@ export function AlertPriority({ alerts }: AlertPriorityProps) {
     }
   }
 
-  const displayAlerts = expanded ? alerts : alerts.slice(0, 5)
+  const displayAlerts = expanded ? alerts : alerts.slice(0, 3)
 
   return (
-    <Card className="p-6 bg-card border-border">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-foreground">Alert Priority</h3>
-        <div className="flex gap-2">
+    <Card className="p-4 bg-card border-border h-full flex flex-col">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-base font-semibold text-foreground">Alert Priority</h3>
+        <div className="flex gap-1.5">
           {critical.length > 0 && (
-            <Badge variant="destructive" className="bg-red-500/20 text-red-500 border-red-500/30">
-              {critical.length} Critical
+            <Badge variant="destructive" className="bg-red-500/20 text-red-500 border-red-500/30 text-[10px] px-1.5 py-0">
+              {critical.length} Crit
             </Badge>
           )}
           {warning.length > 0 && (
-            <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/30">
-              {warning.length} Warning
+            <Badge className="bg-amber-500/20 text-amber-500 border-amber-500/30 text-[10px] px-1.5 py-0">
+              {warning.length} Warn
             </Badge>
           )}
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2 flex-1 overflow-auto pr-1">
         {displayAlerts.map((alert) => (
           <div
             key={alert.id}
-            className={`p-3 rounded-lg border flex items-start gap-3 ${getSeverityColor(
+            className={`p-2.5 rounded-lg border flex items-start gap-2.5 ${getSeverityColor(
               alert.severity
             )}`}
           >
             <div className="mt-0.5">{getSeverityIcon(alert.severity)}</div>
-            <div className="flex-1">
-              <p className="text-sm font-medium">{alert.message}</p>
-              <p className="text-xs opacity-75 mt-1">{alert.timestamp}</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-medium truncate">{alert.message}</p>
+              <p className="text-[10px] opacity-75 mt-0.5">{alert.timestamp}</p>
             </div>
           </div>
         ))}
       </div>
 
-      {alerts.length > 5 && (
+      {alerts.length > 3 && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="w-full mt-4 p-2 text-sm text-blue-400 hover:text-blue-300 flex items-center justify-center gap-2 hover:bg-muted/50 rounded transition"
+          className="w-full mt-3 p-1.5 text-xs text-blue-400 hover:text-blue-300 flex items-center justify-center gap-1.5 hover:bg-muted/50 rounded transition border border-transparent hover:border-border"
         >
-          {expanded ? 'Show Less' : `Show ${alerts.length - 5} More`}
+          {expanded ? 'Show Less' : `Show ${alerts.length - 3} More`}
           <ChevronDown
-            className={`w-4 h-4 transition-transform ${expanded ? 'rotate-180' : ''}`}
+            className={`w-3 h-3 transition-transform ${expanded ? 'rotate-180' : ''}`}
           />
         </button>
       )}

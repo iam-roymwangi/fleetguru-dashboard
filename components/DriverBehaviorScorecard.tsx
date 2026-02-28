@@ -40,17 +40,17 @@ export function DriverBehaviorScorecard({ driverData, behaviorData }: DriverBeha
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <Card className="p-4 bg-accent border-slate-600">
+        <Card className="p-4 bg-accent border-border">
           <div className="text-sm text-muted-foreground mb-1">Fleet Safety Score</div>
           <div className="text-3xl font-bold text-blue-400">86.8</div>
           <div className="text-xs text-yellow-400 mt-1">↑ 3.2 pts this week</div>
         </Card>
-        <Card className="p-4 bg-accent border-slate-600">
+        <Card className="p-4 bg-accent border-border">
           <div className="text-sm text-muted-foreground mb-1">Total Incidents</div>
           <div className="text-3xl font-bold text-red-400">26</div>
           <div className="text-xs text-red-400 mt-1">↓ 12% from last week</div>
         </Card>
-        <Card className="p-4 bg-accent border-slate-600">
+        <Card className="p-4 bg-accent border-border">
           <div className="text-sm text-muted-foreground mb-1">Fuel Cost Savings</div>
           <div className="text-3xl font-bold text-green-400">$8.5K</div>
           <div className="text-xs text-green-400 mt-1">From safe driving habits</div>
@@ -58,7 +58,7 @@ export function DriverBehaviorScorecard({ driverData, behaviorData }: DriverBeha
       </div>
 
       <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-slate-100 mb-4">Driver Safety Scores</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4">Driver Safety Scores</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={defaultDriverData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
@@ -76,7 +76,7 @@ export function DriverBehaviorScorecard({ driverData, behaviorData }: DriverBeha
       </Card>
 
       <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-slate-100 mb-4">Unsafe Driving Behaviors</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4">Unsafe Driving Behaviors</h3>
         <ResponsiveContainer width="100%" height={350}>
           <RadarChart data={defaultBehaviorData}>
             <PolarGrid stroke="#475569" />
@@ -93,13 +93,13 @@ export function DriverBehaviorScorecard({ driverData, behaviorData }: DriverBeha
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <Card className="p-6 bg-muted border-border">
-          <h3 className="text-lg font-semibold text-slate-100 mb-4 text-green-400">Top Performers</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-4 text-green-400">Top Performers</h3>
           <div className="space-y-3">
             {topDrivers.map((driver, idx) => (
-              <div key={idx} className="p-3 bg-accent rounded-lg border border-slate-600">
+              <div key={idx} className="p-3 bg-accent rounded-lg border border-border">
                 <div className="flex justify-between items-start">
                   <div>
-                    <div className="font-semibold text-slate-100">{driver.name}</div>
+                    <div className="font-semibold text-foreground">{driver.name}</div>
                     <div className="text-sm text-green-400">{driver.status}</div>
                   </div>
                   <div className="text-right">
@@ -116,13 +116,13 @@ export function DriverBehaviorScorecard({ driverData, behaviorData }: DriverBeha
         </Card>
 
         <Card className="p-6 bg-muted border-border">
-          <h3 className="text-lg font-semibold text-slate-100 mb-4 text-orange-400">Needs Improvement</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-4 text-orange-400">Needs Improvement</h3>
           <div className="space-y-3">
             {concernedDrivers.map((driver, idx) => (
-              <div key={idx} className="p-3 bg-accent rounded-lg border border-slate-600">
+              <div key={idx} className="p-3 bg-accent rounded-lg border border-border">
                 <div className="flex justify-between items-start">
                   <div>
-                    <div className="font-semibold text-slate-100">{driver.name}</div>
+                    <div className="font-semibold text-foreground">{driver.name}</div>
                     <div className="text-sm text-orange-400">{driver.status}</div>
                   </div>
                   <div className="text-right">

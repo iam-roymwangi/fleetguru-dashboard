@@ -13,12 +13,12 @@ interface KPICardProps {
   color?: string
 }
 
-export function KPICard({ title, value, change, trend, icon, color = 'bg-blue-500' }: KPICardProps) {
+export function KPICard({ title, value, change, trend, icon, color = 'bg-primary' }: KPICardProps) {
   const isPositive = change >= 0
   const trendColor = isPositive ? '#10b981' : '#ef4444'
 
   return (
-    <Card className="p-6 bg-card border-border hover:border-slate-600 transition-colors">
+    <Card className="p-6 bg-card border-border hover:border-border transition-colors">
       <div className="flex items-start justify-between mb-4">
         <div>
           <p className="text-muted-foreground text-sm font-medium">{title}</p>

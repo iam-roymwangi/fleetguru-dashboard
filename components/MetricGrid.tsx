@@ -22,7 +22,7 @@ export function MetricGrid({ metrics }: MetricGridProps) {
       {metrics.map((metric, index) => (
         <Card
           key={index}
-          className="p-4 bg-muted border-border hover:border-slate-600 transition-colors"
+          className="p-4 bg-muted border-border hover:border-border transition-colors"
         >
           <div className="flex items-start justify-between mb-2">
             <p className="text-sm text-muted-foreground">{metric.label}</p>
