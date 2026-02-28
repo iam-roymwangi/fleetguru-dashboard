@@ -257,7 +257,7 @@ export default function Dashboard() {
                 value="fuel"
                 className="rounded-none border-b-2 border-transparent px-4 py-4 data-[state=active]:border-primary data-[state=active]:bg-transparent"
               >
-                Fuel & Emissions
+                Consumption & Emissions
               </TabsTrigger>
               <TabsTrigger
                 value="maintenance"

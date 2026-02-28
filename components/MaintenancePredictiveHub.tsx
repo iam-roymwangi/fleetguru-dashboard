@@ -1,8 +1,8 @@
 'use client'
 
 import { Card } from '@/components/ui/card'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts'
-import { AlertCircle, CheckCircle, Clock, Zap } from 'lucide-react'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { AlertCircle, CheckCircle2, Clock, Activity, ShieldAlert, Wrench } from 'lucide-react'
 
 interface MaintenancePredictiveHubProps {
   engineHoursData?: Array<{ vehicle: string; hours: number; lastService: string }>
@@ -33,150 +33,225 @@ export function MaintenancePredictiveHub({ engineHoursData, sensorData }: Mainte
   ]
 
   const sensorStatus = [
-    { name: 'Oil Pressure', value: 48, status: 'good', range: '45-60' },
-    { name: 'Coolant Temp', value: 92, status: 'good', range: '80-105' },
-    { name: 'Battery Voltage', value: 13.8, status: 'good', range: '13.5-14.5' },
-    { name: 'Fuel Efficiency', value: 22, status: 'warning', range: '24-28' },
+    { name: 'Oil Pressure', value: 48, status: 'good', range: '45-60', unit: 'PSI' },
+    { name: 'Coolant Temp', value: 92, status: 'good', range: '80-105', unit: '°C' },
+    { name: 'Battery Voltage', value: 13.8, status: 'good', range: '13.5-14.5', unit: 'V' },
+    { name: 'Fuel Efficiency', value: 22, status: 'warning', range: '24-28', unit: 'MPG' },
   ]
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        <Card className="p-4 bg-accent border-border">
-          <div className="text-sm text-muted-foreground mb-1">Avg Engine Hours</div>
-          <div className="text-3xl font-bold text-blue-400">2,835</div>
-          <div className="text-xs text-muted-foreground mt-1">Fleet average</div>
+      {/* Top Metrics Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card className="p-6 bg-card border-border flex flex-col justify-between hover:shadow-sm transition-all group">
+          <div className="flex items-center gap-2 mb-4">
+            <Activity className="w-4 h-4 text-muted-foreground" />
+            <div className="text-sm font-medium text-muted-foreground">Avg Engine Hours</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-foreground tracking-tight mb-2">2,835</div>
+            <div className="text-xs text-muted-foreground">Fleet average</div>
+          </div>
         </Card>
-        <Card className="p-4 bg-accent border-border">
-          <div className="text-sm text-muted-foreground mb-1">Critical Alerts</div>
-          <div className="text-3xl font-bold text-red-400">2</div>
-          <div className="text-xs text-red-400 mt-1">Require immediate action</div>
+
+        <Card className="p-6 bg-card border-border flex flex-col justify-between hover:shadow-sm transition-all group">
+          <div className="flex items-center gap-2 mb-4">
+            <ShieldAlert className="w-4 h-4 text-red-500" />
+            <div className="text-sm font-medium text-muted-foreground">Critical Alerts</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-red-500 tracking-tight mb-2">2</div>
+            <div className="text-xs text-muted-foreground">Require immediate action</div>
+          </div>
         </Card>
-        <Card className="p-4 bg-accent border-border">
-          <div className="text-sm text-muted-foreground mb-1">Maintenance Due Soon</div>
-          <div className="text-3xl font-bold text-yellow-400">4</div>
-          <div className="text-xs text-yellow-400 mt-1">Within 30 days</div>
+
+        <Card className="p-6 bg-card border-border flex flex-col justify-between hover:shadow-sm transition-all group">
+          <div className="flex items-center gap-2 mb-4">
+            <Wrench className="w-4 h-4 text-amber-500" />
+            <div className="text-sm font-medium text-muted-foreground">Maintenance Due</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-foreground tracking-tight mb-2">4</div>
+            <div className="text-xs text-muted-foreground">Within 30 days</div>
+          </div>
         </Card>
-        <Card className="p-4 bg-accent border-border">
-          <div className="text-sm text-muted-foreground mb-1">Fleet Health</div>
-          <div className="text-3xl font-bold text-green-400">94%</div>
-          <div className="text-xs text-green-400 mt-1">↑ 2% from last week</div>
+
+        <Card className="p-6 bg-card border-border flex flex-col justify-between hover:shadow-sm transition-all group">
+          <div className="flex items-center gap-2 mb-4">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+            <div className="text-sm font-medium text-muted-foreground">Fleet Health</div>
+          </div>
+          <div>
+            <div className="text-4xl font-bold text-emerald-500 tracking-tight mb-2 flex items-baseline">
+              94<span className="text-2xl ml-1">%</span>
+            </div>
+            <div className="text-xs text-muted-foreground">Strong operational status</div>
+          </div>
         </Card>
       </div>
 
-      <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Engine Health Metrics Trend</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={trendData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#475569" />
-            <XAxis dataKey="week" stroke="#94a3b8" />
-            <YAxis stroke="#94a3b8" />
-            <Tooltip 
-              contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-              labelStyle={{ color: '#f1f5f9' }}
-            />
-            <Legend />
-            <Line type="monotone" dataKey="oilTemp" stroke="#ef4444" strokeWidth={2} name="Oil Temp (°C)" />
-            <Line type="monotone" dataKey="enginePressure" stroke="#f97316" strokeWidth={2} name="Engine Pressure (PSI)" />
-            <Line type="monotone" dataKey="batteryHealth" stroke="#10b981" strokeWidth={2} name="Battery Health (%)" />
-          </LineChart>
-        </ResponsiveContainer>
-      </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column - Spans 2 */}
+        <div className="lg:col-span-2 space-y-6">
+          <Card className="p-6 bg-card border-border">
+            <h3 className="text-base font-semibold text-foreground mb-6">Engine Health Trend</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                <XAxis
+                  dataKey="week"
+                  stroke="hsl(var(--muted-foreground))"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  dy={10}
+                />
+                <YAxis
+                  yAxisId="left"
+                  stroke="hsl(var(--muted-foreground))"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  dx={-10}
+                />
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  stroke="hsl(var(--muted-foreground))"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  dx={10}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'hsl(var(--card))',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                    color: 'hsl(var(--foreground))'
+                  }}
+                />
+                <Line
+                  yAxisId="left"
+                  type="monotone"
+                  dataKey="oilTemp"
+                  stroke="hsl(var(--destructive))"
+                  strokeWidth={3}
+                  dot={{ fill: 'hsl(var(--card))', stroke: 'hsl(var(--destructive))', strokeWidth: 2, r: 4 }}
+                  activeDot={{ r: 6, fill: 'hsl(var(--destructive))' }}
+                  name="Oil Temp (°C)"
+                />
+                <Line
+                  yAxisId="right"
+                  type="monotone"
+                  dataKey="batteryHealth"
+                  stroke="#3b82f6"
+                  strokeWidth={3}
+                  dot={{ fill: 'hsl(var(--card))', stroke: '#3b82f6', strokeWidth: 2, r: 4 }}
+                  activeDot={{ r: 6, fill: '#3b82f6' }}
+                  name="Battery (%)"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </Card>
 
-      <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Current Sensor Status</h3>
-        <div className="space-y-3">
-          {sensorStatus.map((sensor, idx) => (
-            <div key={idx} className="flex items-center justify-between p-3 bg-accent rounded-lg border border-border">
-              <div className="flex items-center gap-3">
-                {sensor.status === 'good' ? (
-                  <CheckCircle className="w-5 h-5 text-green-400" />
-                ) : (
-                  <AlertCircle className="w-5 h-5 text-yellow-400" />
-                )}
-                <div>
-                  <div className="font-semibold text-foreground">{sensor.name}</div>
-                  <div className="text-xs text-muted-foreground">Range: {sensor.range}</div>
-                </div>
-              </div>
-              <div className={`text-lg font-bold ${sensor.status === 'good' ? 'text-green-400' : 'text-yellow-400'}`}>
-                {sensor.value}
-              </div>
+          <Card className="p-6 bg-card border-border overflow-hidden">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-base font-semibold text-foreground">Predictive Maintenance Alerts</h3>
             </div>
-          ))}
-        </div>
-      </Card>
 
-      <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Predictive Maintenance Alerts</h3>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-2 px-3 text-muted-foreground">Vehicle</th>
-                <th className="text-left py-2 px-3 text-muted-foreground">Part</th>
-                <th className="text-left py-2 px-3 text-muted-foreground">Risk Level</th>
-                <th className="text-left py-2 px-3 text-muted-foreground">Days Left</th>
-                <th className="text-left py-2 px-3 text-muted-foreground">Action</th>
-              </tr>
-            </thead>
-            <tbody>
+            <div className="space-y-3">
               {predictiveAlerts.map((alert) => (
-                <tr key={alert.id} className="border-b border-border hover:bg-accent/50">
-                  <td className="py-3 px-3 text-foreground">{alert.vehicle}</td>
-                  <td className="py-3 px-3 text-muted-foreground">{alert.part}</td>
-                  <td className="py-3 px-3">
-                    <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                      alert.risk === 'High' ? 'bg-red-900 text-red-200' :
-                      alert.risk === 'Medium' ? 'bg-yellow-900 text-yellow-200' :
-                      'bg-green-900 text-green-200'
-                    }`}>
-                      {alert.risk}
-                    </span>
-                  </td>
-                  <td className="py-3 px-3">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-foreground font-semibold">{alert.daysLeft}d</span>
+                <div key={alert.id} className="group flex items-center justify-between p-4 bg-muted/40 rounded-xl border border-transparent hover:border-border transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-2 h-10 rounded-full ${alert.risk === 'High' ? 'bg-red-500' :
+                        alert.risk === 'Medium' ? 'bg-amber-500' : 'bg-emerald-500'
+                      }`} />
+                    <div>
+                      <h4 className="font-semibold text-sm text-foreground">{alert.vehicle}</h4>
+                      <p className="text-xs text-muted-foreground mt-0.5">{alert.part} Issue Predicted</p>
                     </div>
-                  </td>
-                  <td className="py-3 px-3">
-                    <button className="text-blue-400 hover:text-blue-300 font-semibold text-xs">
+                  </div>
+
+                  <div className="flex items-center gap-6">
+                    <div className="text-right hidden sm:block">
+                      <div className="text-sm font-medium text-foreground flex items-center justify-end gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-muted-foreground" />
+                        {alert.daysLeft} Days
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-0.5">Estimated timeline</div>
+                    </div>
+                    <button className="text-xs font-semibold px-4 py-2 bg-background border border-border rounded-lg text-foreground hover:bg-muted transition-colors whitespace-nowrap">
                       {alert.action}
                     </button>
-                  </td>
-                </tr>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </Card>
-
-      <Card className="p-6 bg-muted border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Fleet Engine Hours & Service History</h3>
-        <div className="grid grid-cols-1 gap-3">
-          {defaultEngineData.map((vehicle, idx) => (
-            <div key={idx} className="p-4 bg-accent rounded-lg border border-border">
-              <div className="flex justify-between items-start">
-                <div>
-                  <div className="font-semibold text-foreground">{vehicle.vehicle}</div>
-                  <div className="text-sm text-muted-foreground">Last service: {vehicle.lastService}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl font-bold text-blue-400">{vehicle.hours}</div>
-                  <div className="text-xs text-muted-foreground">engine hours</div>
-                </div>
-              </div>
-              <div className="mt-2 w-full bg-secondary rounded-full h-2">
-                <div 
-                  className="bg-gradient-to-r from-green-500 to-yellow-500 h-2 rounded-full" 
-                  style={{ width: `${(vehicle.hours / 4000) * 100}%` }}
-                />
-              </div>
             </div>
-          ))}
+          </Card>
         </div>
-      </Card>
+
+        {/* Right Column - Spans 1 */}
+        <div className="lg:col-span-1 space-y-6">
+          <Card className="p-6 bg-card border-border">
+            <h3 className="text-base font-semibold text-foreground mb-6">Current Sensor Status</h3>
+            <div className="space-y-4">
+              {sensorStatus.map((sensor, idx) => (
+                <div key={idx} className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {sensor.status === 'good' ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                      ) : (
+                        <AlertCircle className="w-4 h-4 text-amber-500" />
+                      )}
+                      <span className="text-sm font-medium text-foreground">{sensor.name}</span>
+                    </div>
+                    <span className={`text-sm font-bold ${sensor.status === 'good' ? 'text-foreground' : 'text-amber-500'}`}>
+                      {sensor.value} <span className="text-xs text-muted-foreground font-medium">{sensor.unit}</span>
+                    </span>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden flex">
+                    {/* Safe simulation of a range gauge, assuming roughly proportional limits for presentation */}
+                    <div
+                      className={`h-full ${sensor.status === 'good' ? 'bg-emerald-500' : 'bg-amber-500'}`}
+                      style={{ width: `${Math.min((sensor.value / parseFloat(sensor.range.split('-')[1])) * 100, 100)}%` }}
+                    />
+                  </div>
+                  <div className="text-[10px] text-muted-foreground text-right">Target Range: {sensor.range}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="p-6 bg-card border-border">
+            <h3 className="text-base font-semibold text-foreground mb-6">Engine Hours Hub</h3>
+            <div className="space-y-4">
+              {defaultEngineData.slice(0, 4).map((vehicle, idx) => (
+                <div key={idx} className="flex flex-col gap-2 pb-4 border-b border-border/50 last:border-0 last:pb-0">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="font-semibold text-sm text-foreground">{vehicle.vehicle}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">Serviced {vehicle.lastService}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-base font-bold text-foreground">{vehicle.hours.toLocaleString()}</div>
+                      <div className="text-[10px] text-muted-foreground">Hours</div>
+                    </div>
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-primary h-full rounded-full transition-all"
+                      style={{ width: `${(vehicle.hours / 4000) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }
