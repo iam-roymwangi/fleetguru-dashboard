@@ -7,6 +7,7 @@ import { useEffect, useState, useMemo } from 'react'
 
 interface VehicleAnalyticsProps {
     vehicleId: string
+    fuelType?: string
 }
 
 const generateDynamicData = (seed: string) => {
@@ -41,7 +42,7 @@ const maintenanceData = [
     { task: 'Filter Replacement', status: 'Upcoming', date: '2024-04-01' },
 ]
 
-export function VehicleAnalytics({ vehicleId }: VehicleAnalyticsProps) {
+export function VehicleAnalytics({ vehicleId, fuelType }: VehicleAnalyticsProps) {
     const { theme } = useTheme()
     const [mounted, setMounted] = useState(false)
 
@@ -88,9 +89,11 @@ export function VehicleAnalytics({ vehicleId }: VehicleAnalyticsProps) {
                 </ResponsiveContainer>
             </Card>
 
-            {/* Fuel Consumption & Cost */}
+            {/* Fuel/Energy Consumption & Cost */}
             <Card className="p-6 bg-card border-border shadow-sm">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Weekly Fuel Consumption & Cost</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-4">
+                    {fuelType === 'Electric' ? 'Weekly Energy Consumption & Cost' : 'Weekly Fuel Consumption & Cost'}
+                </h3>
                 <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={fuelConsumptionData}>
                         <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
@@ -105,7 +108,11 @@ export function VehicleAnalytics({ vehicleId }: VehicleAnalyticsProps) {
                             }}
                         />
                         <Legend wrapperStyle={{ color: textColor }} />
-                        <Bar dataKey="consumption" fill="var(--chart-1)" name="Liters" />
+                        <Bar 
+                            dataKey="consumption" 
+                            fill="var(--chart-1)" 
+                            name={fuelType === 'Electric' ? 'Energy (kWh)' : 'Liters'} 
+                        />
                         <Bar dataKey="cost" fill="var(--chart-3)" name="Cost ($)" />
                     </BarChart>
                 </ResponsiveContainer>

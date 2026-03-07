@@ -233,7 +233,7 @@ export default function VehicleReportPage() {
                                         )}
                                     </div>
 
-                                    <Button className="bg-primary hover:bg-primary/90 mt-2">View Full Details</Button>
+                                    {/* <Button className="bg-primary hover:bg-primary/90 mt-2">View Full Details</Button> */}
                                 </div>
                             </div>
                         </Card>
@@ -242,7 +242,7 @@ export default function VehicleReportPage() {
                             {/* Analytics Section */}
                             <div className="space-y-6 xl:col-span-2">
                                 <h3 className="text-lg font-bold text-foreground">Analytics & Performance</h3>
-                                <VehicleAnalytics vehicleId={selectedVehicle.vin} />
+                                <VehicleAnalytics vehicleId={selectedVehicle.vin} fuelType={selectedVehicle.fuelType} />
                             </div>
 
                             {/* Details Grid Section */}
