@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { Sidebar } from '@/components/Sidebar'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -36,10 +37,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className="font-sans antialiased">
         <ThemeProvider>
-          {children}
+          <div className="flex min-h-screen bg-slate-950">
+            <Sidebar />
+            <main className="flex-1 lg:ml-0">
+              {children}
+            </main>
+          </div>
           <Analytics />
         </ThemeProvider>
       </body>
