@@ -187,7 +187,7 @@ export default function VehicleReportPage() {
                             <div className="flex flex-col md:flex-row gap-6">
                                 {/* Vehicle Image Placeholder */}
                                 <div className="flex-shrink-0">
-                                    <div className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-primary/10 to-orange-500/10 border border-border rounded-lg flex items-center justify-center">
+                                    <div className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-primary/10 to-accent/10 border border-border rounded-lg flex items-center justify-center">
                                         <div className="text-center">
                                             <div className="text-5xl opacity-80 mb-2">🚗</div>
                                             <p className="text-xs text-muted-foreground font-medium">{selectedVehicle.make}</p>
