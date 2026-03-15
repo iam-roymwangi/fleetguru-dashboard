@@ -17,22 +17,22 @@ const reports = {
         {
             category: 'Vehicles',
             reports: [
-                { id: 1, title: 'General vehicle report', description: 'Premium standard report', icon: ClipboardList },
-                { id: 2, title: 'Upcoming services report', description: 'Premium standard report', icon: Wrench },
-                { id: 3, title: 'Vehicle mileage report', description: 'Premium standard report', icon: MapPin },
+                { id: 1, title: 'General vehicle report', description: 'Premium standard report', icon: ClipboardList, href: '/reports/vehicle-report' },
+                { id: 2, title: 'Upcoming services report', description: 'Premium standard report', icon: Wrench, href: '/reports/upcoming-services' },
+                { id: 3, title: 'Vehicle mileage report', description: 'Premium standard report', icon: MapPin, href: '/reports/vehicle-mileage' },
                 { id: 4, title: 'Vehicle fillups report', description: 'Premium standard report', icon: Fuel },
                 { id: 5, title: 'Insurance claims report', description: 'Premium standard report', icon: FileText },
                 { id: 6, title: 'Vehicle trips report', description: 'Premium standard report', icon: Car },
                 { id: 7, title: 'Main KPIs report', description: 'Premium standard report', icon: BarChart3 },
                 { id: 8, title: 'Telimus', description: 'Organization-wide custom report', icon: Radio },
-                { id: 9, title: 'Vehicle tires report', description: 'Premium standard report', icon: CircleDashed },
+                { id: 9, title: 'Vehicle tires report', description: 'Premium standard report', icon: CircleDashed, href: '/reports/vehicle-tires' },
                 { id: 10, title: 'Mileage', description: 'Organization-wide custom report', icon: Timer },
                 { id: 11, title: 'EV charges report', description: 'Premium standard report', icon: PlugZap },
                 { id: 12, title: 'Vehicle checkups report', description: 'Premium standard report', icon: CheckCircle },
                 { id: 13, title: 'Alerts report', description: 'Premium standard report', icon: AlertTriangle },
                 { id: 14, title: 'Vehicle status report', description: 'Premium standard report', icon: TrendingUp },
                 { id: 15, title: 'CO2 report', description: 'Premium standard report', icon: Cloud },
-                { id: 16, title: 'Vehicle engine hours report', description: 'Premium standard report', icon: Settings },
+                { id: 16, title: 'Vehicle engine hours report', description: 'Premium standard report', icon: Settings, href: '/reports/engine-hours' },
                 { id: 17, title: 'Insurance coverage report', description: 'Premium standard report', icon: Shield },
                 { id: 18, title: 'Vehicle issues report', description: 'Premium standard report', icon: Zap },
                 { id: 19, title: 'Leasing and rental contracts report', description: 'Premium standard report', icon: ScrollText },
@@ -61,6 +61,7 @@ interface ReportCard {
     title: string
     description: string
     icon: React.ElementType
+    href?: string
 }
 
 interface Category {
@@ -90,10 +91,18 @@ export default function ReportsPage() {
 
     const ReportCard = ({ report }: { report: ReportCard }) => {
         const IconComponent = report.icon
-        const isLinkedToVehicleReport = report.id === 1 // "General vehicle report"
-        const isLinkedToUpcomingServices = report.id === 2 // "Upcoming services report"
-        const isLinkedToTiresReport = report.id === 9 // "Vehicle tires report"
-        const isLinkedToMileageReport = report.id === 3 // "Vehicle mileage report"
+        const isLinkedToVehicleReport = report.id === 1
+        const isLinkedToUpcomingServices = report.id === 2
+        const isLinkedToTiresReport = report.id === 9
+        const isLinkedToMileageReport = report.id === 3
+
+        const linkedHref =
+            report.href ??
+            (isLinkedToVehicleReport ? '/reports/vehicle-report' :
+            isLinkedToUpcomingServices ? '/reports/upcoming-services' :
+            isLinkedToTiresReport ? '/reports/vehicle-tires' :
+            isLinkedToMileageReport ? '/reports/vehicle-mileage' :
+            null)
 
         return (
             <Card className="bg-card border-border hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer p-5 flex flex-col h-full">
@@ -104,32 +113,11 @@ export default function ReportsPage() {
                     <div className="flex-1 flex flex-col">
                         <h3 className="text-foreground font-semibold mb-1">{report.title}</h3>
                         <p className="text-muted-foreground text-sm mb-4 flex-1">{report.description}</p>
-                        
-                        {isLinkedToVehicleReport ? (
-                            <Link href="/reports/vehicle-report" className="w-full sm:w-auto">
+
+                        {linkedHref ? (
+                            <Link href={linkedHref} className="w-full sm:w-auto">
                                 <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 w-full">
                                     <FileText className="w-4 h-4" />
-                                    View Report
-                                </Button>
-                            </Link>
-                        ) : isLinkedToUpcomingServices ? (
-                            <Link href="/reports/upcoming-services" className="w-full sm:w-auto">
-                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 w-full">
-                                    <Wrench className="w-4 h-4" />
-                                    View Report
-                                </Button>
-                            </Link>
-                        ) : isLinkedToTiresReport ? (
-                            <Link href="/reports/vehicle-tires" className="w-full sm:w-auto">
-                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 w-full">
-                                    <CircleDashed className="w-4 h-4" />
-                                    View Report
-                                </Button>
-                            </Link>
-                        ) : isLinkedToMileageReport ? (
-                            <Link href="/reports/vehicle-mileage" className="w-full sm:w-auto">
-                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 w-full">
-                                    <MapPin className="w-4 h-4" />
                                     View Report
                                 </Button>
                             </Link>

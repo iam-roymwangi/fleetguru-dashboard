@@ -1,13 +1,15 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Gauge } from 'lucide-react'
+import { Gauge, Download } from 'lucide-react'
 import { vehicles } from '@/lib/vehicleData'
 import { MileageFilters } from '@/components/MileageFilters'
 import { MileageStatistics } from '@/components/MileageStatistics'
 import { MileageCharts } from '@/components/MileageCharts'
 import { MileageDataTable } from '@/components/MileageDataTable'
 import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { exportToExcel } from '@/lib/exportToExcel'
 
 export default function VehicleMileageReport() {
     const [filters, setFilters] = useState({
@@ -17,6 +19,21 @@ export default function VehicleMileageReport() {
         mileageMin: 0,
         mileageMax: 100000,
     })
+
+    const handleExport = () => {
+        const data = filteredVehicles.map(v => ({
+            'Vehicle Name': v.displayName,
+            'License Plate': v.licensePlate,
+            'Make': v.make,
+            'Model': v.model,
+            'Vehicle Type': v.vehicleType,
+            'Fuel Type': v.fuelType,
+            'Current Mileage (km)': v.currentMileage ?? '',
+            'Status': v.vehicleStatus,
+            'Possession': v.possession,
+        }))
+        exportToExcel(data, 'vehicle-mileage-report', 'Mileage')
+    }
 
     const filteredVehicles = useMemo(() => {
         return vehicles.filter(v => {
@@ -50,9 +67,15 @@ export default function VehicleMileageReport() {
                             <p className="text-sm text-muted-foreground">Monitor vehicle mileage and usage patterns</p>
                         </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex items-center gap-3">
+                        <Button onClick={handleExport} className="bg-primary hover:bg-primary/90 gap-2">
+                            <Download className="w-4 h-4" />
+                            Export to Excel
+                        </Button>
+                        <div>
                         <p className="text-sm text-muted-foreground uppercase tracking-wider font-medium">Active Vehicles</p>
                         <p className="text-3xl font-bold text-primary">{filteredVehicles.length}</p>
+                        </div>
                     </div>
                 </div>
             </div>

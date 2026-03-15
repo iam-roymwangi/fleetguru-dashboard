@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Search, Download, Filter, ChevronRight, ChevronLeft } from 'lucide-react'
+import { exportToExcel } from '@/lib/exportToExcel'
 
 const ITEMS_PER_PAGE = 5
 
@@ -47,6 +48,26 @@ export default function VehicleReportPage() {
     const totalPages = Math.ceil(filteredVehicles.length / ITEMS_PER_PAGE)
     const paginatedVehicles = filteredVehicles.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
+    const handleExport = () => {
+        const data = filteredVehicles.map(v => ({
+            'Vehicle Name': v.displayName,
+            'License Plate': v.licensePlate,
+            'VIN': v.vin,
+            'Make': v.make,
+            'Model': v.model,
+            'Vehicle Type': v.vehicleType,
+            'Body Type': v.bodyType,
+            'Fuel Type': v.fuelType,
+            'Transmission': v.transmissionType,
+            'Status': v.vehicleStatus,
+            'Possession': v.possession,
+            'Assigned Person': v.assignedPerson ?? '',
+            'Vehicle Manager': v.vehicleManager ?? '',
+            'Current Mileage (km)': v.currentMileage ?? '',
+        }))
+        exportToExcel(data, 'vehicle-report', 'Vehicles')
+    }
+
     return (
         <div className="w-full bg-background min-h-screen">
             {/* Header */}
@@ -65,7 +86,7 @@ export default function VehicleReportPage() {
                         </div>
                         <div className="flex items-center gap-3">
                             <ThemeToggle />
-                            <Button className="bg-primary hover:bg-primary/90 gap-2">
+                            <Button onClick={handleExport} className="bg-primary hover:bg-primary/90 gap-2">
                                 <Download className="w-4 h-4" />
                                 Export Report
                             </Button>

@@ -11,7 +11,8 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/ThemeToggle'
-import { Search, AlertCircle, ChevronRight, ChevronLeft } from 'lucide-react'
+import { Search, AlertCircle, ChevronRight, ChevronLeft, Download } from 'lucide-react'
+import { exportToExcel } from '@/lib/exportToExcel'
 
 const ITEMS_PER_PAGE = 5
 
@@ -74,8 +75,7 @@ export default function VehicleTiresPage() {
     const paginatedVehicles = vehiclesWithTires.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
     // Count vehicles that match current filters (for filter sidebar)
-    const matchingVehicleCount = useMemo(() => {
-        return vehiclesWithTires.filter((v: Vehicle) => {
+    const matchingVehicleCount = useMemo(() => {        return vehiclesWithTires.filter((v: Vehicle) => {
             if (!v.tires) return false
             return v.tires.some((tire: any) => {
                 if (filters.status !== 'all' && tire.status !== filters.status) return false
@@ -86,6 +86,26 @@ export default function VehicleTiresPage() {
             })
         }).length
     }, [vehiclesWithTires, filters])
+
+    const handleExport = () => {
+        const rows = vehiclesWithTires.flatMap(v =>
+            (v.tires ?? []).map((tire: any) => ({
+                'Vehicle': v.displayName,
+                'License Plate': v.licensePlate,
+                'Tire Position': tire.position ?? '',
+                'Type': tire.type,
+                'Size': tire.size,
+                'Manufacturer': tire.manufacturer,
+                'Model': tire.model,
+                'Status': tire.status,
+                'Condition': tire.condition,
+                'Tread Depth (mm)': tire.treadDepth ?? '',
+                'Storage Location': tire.storageLocation ?? '',
+                'Last Inspection': tire.lastInspection ?? '',
+            }))
+        )
+        exportToExcel(rows, 'vehicle-tires-report', 'Tires')
+    }
 
     return (
         <div className="w-full min-h-screen bg-background text-foreground">
@@ -105,6 +125,10 @@ export default function VehicleTiresPage() {
                         </div>
                         <div className="flex items-center gap-3">
                             <ThemeToggle />
+                            <Button onClick={handleExport} className="bg-primary hover:bg-primary/90 gap-2">
+                                <Download className="w-4 h-4" />
+                                Export to Excel
+                            </Button>
                         </div>
                     </div>
                 </div>

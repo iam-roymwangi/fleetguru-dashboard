@@ -7,8 +7,9 @@ import { ServiceFilters } from '@/components/ServiceFilters'
 import { ServicesSummary } from '@/components/ServicesSummary'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Wrench, Calendar, ChevronRight, ChevronLeft } from 'lucide-react'
+import { Wrench, Calendar, ChevronRight, ChevronLeft, Download } from 'lucide-react'
 import Link from 'next/link'
+import { exportToExcel } from '@/lib/exportToExcel'
 
 const ITEMS_PER_PAGE = 5
 
@@ -64,6 +65,22 @@ export default function UpcomingServicesPage() {
 
     const [currentPage, setCurrentPage] = useState(1)
 
+    const handleExport = () => {
+        const data = sortedServices.map(s => ({
+            'Vehicle': s.vehicleName,
+            'Service Name': s.serviceName,
+            'Service Type': s.serviceType,
+            'Due Date': s.dueDate,
+            'Days Until Due': s.daysUntilDue,
+            'Priority': s.priority,
+            'Status': s.status,
+            'Estimated Cost ($)': s.estimatedCost,
+            'Assigned Technician': s.assignedTechnician ?? '',
+            'Notes': s.notes ?? '',
+        }))
+        exportToExcel(data, 'upcoming-services-report', 'Services')
+    }
+
     // Reset pagination when filters change
     useMemo(() => {
         setCurrentPage(1)
@@ -93,6 +110,10 @@ export default function UpcomingServicesPage() {
                                 <p className="text-sm text-muted-foreground mt-1">Manage and track vehicle maintenance schedules</p>
                             </div>
                         </div>
+                        <Button onClick={handleExport} className="bg-primary hover:bg-primary/90 gap-2">
+                            <Download className="w-4 h-4" />
+                            Export to Excel
+                        </Button>
                     </div>
                 </div>
             </div>
