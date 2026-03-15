@@ -1,3 +1,24 @@
+export interface MileageRecord {
+    id: string
+    date: string
+    mileage: number
+    estimatedMonthlyAverage?: number
+}
+
+export interface Tire {
+    id: string
+    type: 'summer' | 'winter' | 'all-terrain' | 'studded' | 'non-studded'
+    size: string
+    manufacturer: string
+    model: string
+    status: 'mounted' | 'stored'
+    treadDepth: number | null
+    condition: 'excellent' | 'good' | 'fair' | 'poor' | 'unknown'
+    position?: 'front-left' | 'front-right' | 'rear-left' | 'rear-right'
+    storageLocation?: string
+    lastInspection?: string
+}
+
 export interface Vehicle {
     vin: string
     licensePlate: string
@@ -15,6 +36,9 @@ export interface Vehicle {
     fuelType: string
     spareTire: string
     possession: string
+    tires?: Tire[]
+    currentMileage?: number
+    mileageRecords?: MileageRecord[]
 }
 
 export const vehicles: Vehicle[] = [
@@ -32,6 +56,62 @@ export const vehicles: Vehicle[] = [
         fuelType: 'Gasoline',
         spareTire: 'full size',
         possession: 'owned',
+        currentMileage: 48562,
+        mileageRecords: [
+            { id: 'mil-1-1', date: '2024-01-15', mileage: 45230, estimatedMonthlyAverage: 2100 },
+            { id: 'mil-1-2', date: '2024-02-15', mileage: 47330, estimatedMonthlyAverage: 2100 },
+            { id: 'mil-1-3', date: '2024-03-15', mileage: 48562, estimatedMonthlyAverage: 1232 },
+        ],
+        tires: [
+            {
+                id: 'tire-fl-1',
+                type: 'summer',
+                size: '245/70 R16',
+                manufacturer: 'Goodyear',
+                model: 'Assurance WeatherReady',
+                status: 'mounted',
+                treadDepth: 7.5,
+                condition: 'good',
+                position: 'front-left',
+                lastInspection: '2024-02-15',
+            },
+            {
+                id: 'tire-fr-1',
+                type: 'summer',
+                size: '245/70 R16',
+                manufacturer: 'Goodyear',
+                model: 'Assurance WeatherReady',
+                status: 'mounted',
+                treadDepth: 7.8,
+                condition: 'good',
+                position: 'front-right',
+                lastInspection: '2024-02-15',
+            },
+            {
+                id: 'tire-rl-1',
+                type: 'summer',
+                size: '245/70 R16',
+                manufacturer: 'Goodyear',
+                model: 'Assurance WeatherReady',
+                status: 'mounted',
+                treadDepth: 6.9,
+                condition: 'fair',
+                position: 'rear-left',
+                lastInspection: '2024-02-15',
+            },
+            {
+                id: 'tire-rr-1',
+                type: 'summer',
+                size: '245/70 R16',
+                manufacturer: 'Goodyear',
+                model: 'Assurance WeatherReady',
+                status: 'mounted',
+                treadDepth: 7.1,
+                condition: 'fair',
+                position: 'rear-right',
+                lastInspection: '2024-02-15',
+            },
+        ],
     },
     {
         vin: 'WBANM71010CP17150',
@@ -47,6 +127,62 @@ export const vehicles: Vehicle[] = [
         fuelType: 'Diesel',
         spareTire: 'unknown',
         possession: 'operational leasing',
+        currentMileage: 35874,
+        mileageRecords: [
+            { id: 'mil-3-1', date: '2024-01-05', mileage: 33200, estimatedMonthlyAverage: 1800 },
+            { id: 'mil-3-2', date: '2024-02-05', mileage: 35000, estimatedMonthlyAverage: 1800 },
+            { id: 'mil-3-3', date: '2024-03-05', mileage: 35874, estimatedMonthlyAverage: 874 },
+        ],
+        tires: [
+            {
+                id: 'tire-fl-3',
+                type: 'summer',
+                size: '245/45 R18 100Y',
+                manufacturer: 'Continental',
+                model: 'PremiumContact 6',
+                status: 'mounted',
+                treadDepth: 6.5,
+                condition: 'fair',
+                position: 'front-left',
+                lastInspection: '2024-02-10',
+            },
+            {
+                id: 'tire-fr-3',
+                type: 'summer',
+                size: '245/45 R18 100Y',
+                manufacturer: 'Continental',
+                model: 'PremiumContact 6',
+                status: 'mounted',
+                treadDepth: 6.2,
+                condition: 'fair',
+                position: 'front-right',
+                lastInspection: '2024-02-10',
+            },
+            {
+                id: 'tire-rl-3',
+                type: 'summer',
+                size: '245/45 R18 100Y',
+                manufacturer: 'Continental',
+                model: 'PremiumContact 6',
+                status: 'mounted',
+                treadDepth: 5.9,
+                condition: 'fair',
+                position: 'rear-left',
+                lastInspection: '2024-02-10',
+            },
+            {
+                id: 'tire-rr-3',
+                type: 'summer',
+                size: '245/45 R18 100Y',
+                manufacturer: 'Continental',
+                model: 'PremiumContact 6',
+                status: 'mounted',
+                treadDepth: 6.0,
+                condition: 'fair',
+                position: 'rear-right',
+                lastInspection: '2024-02-10',
+            },
+        ],
     },
     {
         vin: 'SHSRE6890FU521279',
@@ -64,6 +200,74 @@ export const vehicles: Vehicle[] = [
         fuelType: 'Diesel',
         spareTire: 'full size',
         possession: 'owned',
+        currentMileage: 62148,
+        mileageRecords: [
+            { id: 'mil-2-1', date: '2024-01-10', mileage: 58900, estimatedMonthlyAverage: 2750 },
+            { id: 'mil-2-2', date: '2024-02-10', mileage: 61650, estimatedMonthlyAverage: 2750 },
+            { id: 'mil-2-3', date: '2024-03-10', mileage: 62148, estimatedMonthlyAverage: 498 },
+        ],
+        tires: [
+            {
+                id: 'tire-fl-2',
+                type: 'non-studded',
+                size: '225/60 R18 1000',
+                manufacturer: 'Dunlop',
+                model: 'Winter Sport 5',
+                status: 'mounted',
+                treadDepth: 5.0,
+                condition: 'good',
+                position: 'front-left',
+                lastInspection: '2024-02-20',
+            },
+            {
+                id: 'tire-fr-2',
+                type: 'non-studded',
+                size: '225/60 R18 1000',
+                manufacturer: 'Dunlop',
+                model: 'Winter Sport 5',
+                status: 'mounted',
+                treadDepth: 5.1,
+                condition: 'good',
+                position: 'front-right',
+                lastInspection: '2024-02-20',
+            },
+            {
+                id: 'tire-rl-2',
+                type: 'non-studded',
+                size: '225/60 R18 1000',
+                manufacturer: 'Dunlop',
+                model: 'Winter Sport 5',
+                status: 'mounted',
+                treadDepth: 4.8,
+                condition: 'fair',
+                position: 'rear-left',
+                lastInspection: '2024-02-20',
+            },
+            {
+                id: 'tire-rr-2',
+                type: 'non-studded',
+                size: '225/60 R18 1000',
+                manufacturer: 'Dunlop',
+                model: 'Winter Sport 5',
+                status: 'mounted',
+                treadDepth: 5.2,
+                condition: 'good',
+                position: 'rear-right',
+                lastInspection: '2024-02-20',
+            },
+            {
+                id: 'tire-s1-2',
+                type: 'summer',
+                size: '225/60 R18 1000',
+                manufacturer: 'Goodyear',
+                model: 'Assurance',
+                status: 'stored',
+                treadDepth: 5.0,
+                condition: 'good',
+                storageLocation: 'Own Garage',
+                lastInspection: '2024-02-20',
+            },
+        ],
     },
     {
         vin: '61779Y280',

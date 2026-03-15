@@ -92,6 +92,8 @@ export default function ReportsPage() {
         const IconComponent = report.icon
         const isLinkedToVehicleReport = report.id === 1 // "General vehicle report"
         const isLinkedToUpcomingServices = report.id === 2 // "Upcoming services report"
+        const isLinkedToTiresReport = report.id === 9 // "Vehicle tires report"
+        const isLinkedToMileageReport = report.id === 3 // "Vehicle mileage report"
 
         return (
             <Card className="bg-card border-border hover:border-primary hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 cursor-pointer p-5 flex flex-col h-full">
@@ -114,6 +116,20 @@ export default function ReportsPage() {
                             <Link href="/reports/upcoming-services" className="w-full sm:w-auto">
                                 <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 w-full">
                                     <Wrench className="w-4 h-4" />
+                                    View Report
+                                </Button>
+                            </Link>
+                        ) : isLinkedToTiresReport ? (
+                            <Link href="/reports/vehicle-tires" className="w-full sm:w-auto">
+                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 w-full">
+                                    <CircleDashed className="w-4 h-4" />
+                                    View Report
+                                </Button>
+                            </Link>
+                        ) : isLinkedToMileageReport ? (
+                            <Link href="/reports/vehicle-mileage" className="w-full sm:w-auto">
+                                <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 w-full">
+                                    <MapPin className="w-4 h-4" />
                                     View Report
                                 </Button>
                             </Link>
