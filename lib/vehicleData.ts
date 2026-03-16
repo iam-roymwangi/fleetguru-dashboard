@@ -269,7 +269,7 @@ export const vehicles: Vehicle[] = [
         treadDepth: 4.8,
         condition: 'fair',
         position: 'rear-left',
-        lastInspection: '2024-02-20',
+        lastInspection: '2024-02-22',
       },
       {
         id: 'tire-rr-2',
